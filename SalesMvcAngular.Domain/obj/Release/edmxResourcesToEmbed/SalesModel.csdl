@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SalesMvcAngularModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerPersonalId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InvoiceHeaders" Relationship="SalesMvcAngularModel.FK_InvoiceHeader_Customers" FromRole="Customer" ToRole="InvoiceHeader" />
+  </EntityType>
+  <EntityType Name="InvoiceType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InvoiceHeaders" Relationship="SalesMvcAngularModel.FK_InvoiceHeader_InvoiceTypes" FromRole="InvoiceType" ToRole="InvoiceHeader" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PurchasPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SellPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="BeginningInventory" Type="Int32" Nullable="false" />
+    <Property Name="BarCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierID" Type="Int32" />
+    <Property Name="StoreID" Type="Int32" />
+    <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_Item_Store" FromRole="Item" ToRole="Store" />
+    <NavigationProperty Name="Supplier" Relationship="Self.FK_Item_Supplier" FromRole="Item" ToRole="Suppliers" />
+    <NavigationProperty Name="StoreTransactions" Relationship="Self.FK_StoreTransaction_Item" FromRole="Item" ToRole="StoreTransaction" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="SalesMvcAngularModel.FK_InvoiceDetails_Items" FromRole="Item" ToRole="InvoiceDetail" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StoreName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Items" Relationship="Self.FK_Item_Store" FromRole="Store" ToRole="Item" />
+    <NavigationProperty Name="StoreTransactions" Relationship="Self.FK_StoreTransaction_Store" FromRole="Store" ToRole="StoreTransaction" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="SalesMvcAngularModel.FK_InvoiceDetails_Store" FromRole="Store" ToRole="InvoiceDetail" />
+  </EntityType>
+  <EntityType Name="StoreTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="StoreId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Item" Relationship="Self.FK_StoreTransaction_Item" FromRole="StoreTransaction" ToRole="Item" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_StoreTransaction_Store" FromRole="StoreTransaction" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierMobile1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierMobile2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierPersonalId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Items" Relationship="Self.FK_Item_Supplier" FromRole="Suppliers" ToRole="Item" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="SalesMvcAngularModel.FK_InvoiceDetails_Suppliers" FromRole="Supplier" ToRole="InvoiceDetail" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InvoiceHeaders" Relationship="SalesMvcAngularModel.FK_InvoiceHeader_Users" FromRole="User" ToRole="InvoiceHeader" />
+  </EntityType>
+  <Association Name="FK_Item_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="StoreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_Supplier">
+    <End Role="Suppliers" Type="Self.Supplier" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StoreTransaction_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="StoreTransaction" Type="Self.StoreTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreTransaction">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StoreTransaction_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="StoreTransaction" Type="Self.StoreTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreTransaction">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SalesDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="InvoiceTypes" EntityType="Self.InvoiceType" />
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="Stores" EntityType="Self.Store" />
+    <EntitySet Name="StoreTransactions" EntityType="Self.StoreTransaction" />
+    <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Item_Store" Association="Self.FK_Item_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_Supplier" Association="Self.FK_Item_Supplier">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StoreTransaction_Item" Association="Self.FK_StoreTransaction_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="StoreTransaction" EntitySet="StoreTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StoreTransaction_Store" Association="Self.FK_StoreTransaction_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="StoreTransaction" EntitySet="StoreTransactions" />
+    </AssociationSet>
+    <EntitySet Name="InvoiceDetails" EntityType="SalesMvcAngularModel.InvoiceDetail" />
+    <EntitySet Name="InvoiceHeaders" EntityType="SalesMvcAngularModel.InvoiceHeader" />
+    <AssociationSet Name="FK_InvoiceHeader_Customers" Association="SalesMvcAngularModel.FK_InvoiceHeader_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="InvoiceHeader" EntitySet="InvoiceHeaders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceDetails_Items" Association="SalesMvcAngularModel.FK_InvoiceDetails_Items">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceDetails_Store" Association="SalesMvcAngularModel.FK_InvoiceDetails_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceDetails_Suppliers" Association="SalesMvcAngularModel.FK_InvoiceDetails_Suppliers">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesInvoiceDetails_SaleInvoiceHeader" Association="SalesMvcAngularModel.FK_SalesInvoiceDetails_SaleInvoiceHeader">
+      <End Role="InvoiceHeader" EntitySet="InvoiceHeaders" />
+      <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceHeader_InvoiceTypes" Association="SalesMvcAngularModel.FK_InvoiceHeader_InvoiceTypes">
+      <End Role="InvoiceType" EntitySet="InvoiceTypes" />
+      <End Role="InvoiceHeader" EntitySet="InvoiceHeaders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceHeader_Users" Association="SalesMvcAngularModel.FK_InvoiceHeader_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="InvoiceHeader" EntitySet="InvoiceHeaders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="InvoiceDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="HeadId" Type="Int32" />
+    <Property Name="itemprice" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Tax" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="ItemNet" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="StoreId" Type="Int32" />
+    <Property Name="SupplierId" Type="Int32" />
+    <NavigationProperty Name="Item" Relationship="SalesMvcAngularModel.FK_InvoiceDetails_Items" FromRole="InvoiceDetail" ToRole="Item" />
+    <NavigationProperty Name="Store" Relationship="SalesMvcAngularModel.FK_InvoiceDetails_Store" FromRole="InvoiceDetail" ToRole="Store" />
+    <NavigationProperty Name="Supplier" Relationship="SalesMvcAngularModel.FK_InvoiceDetails_Suppliers" FromRole="InvoiceDetail" ToRole="Supplier" />
+    <NavigationProperty Name="InvoiceHeader" Relationship="SalesMvcAngularModel.FK_SalesInvoiceDetails_SaleInvoiceHeader" FromRole="InvoiceDetail" ToRole="InvoiceHeader" />
+  </EntityType>
+  <EntityType Name="InvoiceHeader">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoiceDate" Type="DateTime" Precision="3" />
+    <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Tax" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Net" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Paid" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Remaining" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TypeId" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="SalesMvcAngularModel.FK_InvoiceHeader_Customers" FromRole="InvoiceHeader" ToRole="Customer" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="SalesMvcAngularModel.FK_SalesInvoiceDetails_SaleInvoiceHeader" FromRole="InvoiceHeader" ToRole="InvoiceDetail" />
+    <NavigationProperty Name="InvoiceType" Relationship="SalesMvcAngularModel.FK_InvoiceHeader_InvoiceTypes" FromRole="InvoiceHeader" ToRole="InvoiceType" />
+    <NavigationProperty Name="User" Relationship="SalesMvcAngularModel.FK_InvoiceHeader_Users" FromRole="InvoiceHeader" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_InvoiceHeader_Customers">
+    <End Type="SalesMvcAngularModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="SalesMvcAngularModel.InvoiceHeader" Role="InvoiceHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InvoiceHeader">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceDetails_Items">
+    <End Type="SalesMvcAngularModel.Item" Role="Item" Multiplicity="0..1" />
+    <End Type="SalesMvcAngularModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InvoiceDetail">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceDetails_Store">
+    <End Type="SalesMvcAngularModel.Store" Role="Store" Multiplicity="0..1" />
+    <End Type="SalesMvcAngularModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InvoiceDetail">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceDetails_Suppliers">
+    <End Type="SalesMvcAngularModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+    <End Type="SalesMvcAngularModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InvoiceDetail">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesInvoiceDetails_SaleInvoiceHeader">
+    <End Type="SalesMvcAngularModel.InvoiceHeader" Role="InvoiceHeader" Multiplicity="0..1" />
+    <End Type="SalesMvcAngularModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceHeader">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InvoiceDetail">
+        <PropertyRef Name="HeadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceHeader_InvoiceTypes">
+    <End Type="SalesMvcAngularModel.InvoiceType" Role="InvoiceType" Multiplicity="0..1" />
+    <End Type="SalesMvcAngularModel.InvoiceHeader" Role="InvoiceHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InvoiceHeader">
+        <PropertyRef Name="TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceHeader_Users">
+    <End Type="SalesMvcAngularModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="SalesMvcAngularModel.InvoiceHeader" Role="InvoiceHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="InvoiceHeader">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

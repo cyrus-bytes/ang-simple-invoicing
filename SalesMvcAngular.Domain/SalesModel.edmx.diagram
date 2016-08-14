@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2d23d36c82ae44b682b44365175f7848" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="SalesMvcAngularModel.Customer" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.InvoiceType" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.Item" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.Store" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.StoreTransaction" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.Supplier" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.User" Width="1.5" PointX="0.75" PointY="18.375" IsExpanded="true" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_Item_Store" ManuallyRouted="false" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_Item_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_StoreTransaction_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_StoreTransaction_Store" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.InvoiceDetail" Width="1.5" PointX="8.25" PointY="9" />
+        <EntityTypeShape EntityType="SalesMvcAngularModel.InvoiceHeader" Width="1.5" PointX="3" PointY="12.5" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_InvoiceHeader_Customers" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_InvoiceDetails_Items" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_InvoiceDetails_Store" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_InvoiceDetails_Suppliers" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_SalesInvoiceDetails_SaleInvoiceHeader" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_InvoiceHeader_InvoiceTypes" />
+        <AssociationConnector Association="SalesMvcAngularModel.FK_InvoiceHeader_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

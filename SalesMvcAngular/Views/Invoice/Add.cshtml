@@ -1,0 +1,238 @@
+﻿@model SalesMvcAngular.Domain.InvoiceHeader
+
+@{
+    ViewBag.Title = "Add Sales INVOICE";
+}
+@* <link href="~/Content/inv/print.css" rel="stylesheet" />*@
+<link href="~/Content/inv/style.css" rel="stylesheet" />
+<style type="text/css">
+    .angucomplete-dropdown {
+        overflow-y: auto;
+        max-height: 200px;
+    }
+    .paid {
+        border: 1px solid #1B2;
+        height: 35px;
+        /* line-height: 35px; */
+        font-weight: bold;
+    }
+    .rm {
+        border: 1px solid #0094ff;
+        height: 35px;
+        /* line-height: 35px; */
+        font-weight: bold;
+    }
+    .pl {
+        font-weight: bold;
+    }
+    .invhd > div {
+        background-color: skyblue;
+    }
+    .addinv {
+        margin: 22px 0;
+        /* border: 1px solid #0000ff; */
+        padding: 20px 5px;
+    }
+    .addinvDiv {
+        background-color: #d4d4d4;
+    }
+</style>
+<body ng-app="invoicing" ng-controller="InvoiceCtrl">
+    <div class="container" width="800px" id="invoice">
+        <div class="row">
+            <div class="col-xs-12 heading">
+                INVOICE
+            </div>
+        </div>
+        <div class="alert alert-danger alert-dismissable" ng-if="SaveResult && SaveResult != '0' ">
+            <div ng-bind-html="SaveResult"></div>
+        </div>
+        <div class="row branding">
+            <div class="col-xs-6">
+                <div class="invoice-number-container">
+                  <label for="dtp">Invoice Date</label>
+                    <div id="dtp" class="dropdown">
+                        <a class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="tt" href="">
+                            <div class="input-append">
+                                <input type="text" class="input-large" ng-model="date" style="border: 1px solid gray"><span class="add-on">
+                                    <i class="icon-calendar"></i>
+                                </span>
+                            </div>
+                        </a>
+                        <ul id="tt" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker ng-model="date"
+                                            datetimepicker-config="{ dropdownSelector: '.my-toggle-select' ,minView:'hour',modelType:'DD-MM-YYYY HH:MM'}" on-set-time="onTimeSet(newDate, oldDate)"></datetimepicker>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            @*<div class="col-xs-6 logo-container">
+                    <input type="file" id="imgInp" />
+                    <img ng-hide="logoRemoved" id="company_logo" ng-src="{{ logo }}" alt="your image" width="300" />
+                    <div>
+                        <div class="noPrint" ng-hide="printMode">
+                            <a ng-click="editLogo()" href>Edit Logo</a>
+                            <a ng-click="toggleLogo()" id="remove_logo" href>{{ logoRemoved ? 'Show' : 'Hide' }} logo</a>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+        <div class="row infos">
+
+            <div class="col-xs-6">
+                @*<div class="form-group">*@
+                <div class="col-xs-2" style="height: 35px; line-height: 35px; font-weight: bold; ">Customer</div>
+                <div class="col-xs-10" angucomplete-alt id="customersAutocomplete" placeholder="Type customer name" pause="100"
+                     selected-object="afterSelectedCustomer" local-data="customers" search-fields="CustomerName"
+                     title-field="CustomerName" minlength="0" input-class="form-control form-control-small" match-class="highlight">
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="col-xs-1" style="height: 35px; line-height: 35px; font-weight: bold; ">Store </div>
+                <div class="col-xs-11" angucomplete-alt id="storesAutocomplete" placeholder="Type store name" pause="100"
+                     selected-object="afterSelectedStore" local-data="stores" search-fields="StoreName"
+                     title-field="StoreName" minlength="0" input-class="form-control form-control-small" match-class="highlight">
+                </div>
+            </div>
+        </div>
+        <div class="row addinv">
+
+            <div class="col-xs-12">
+                <div class="items-table">
+                    <div class="row header addinvDiv">
+                        <div class="col-xs-3">Item</div>
+                        <div class="col-xs-1">Quantity</div>
+                        <div class="col-xs-1">Price</div>
+                        <div class="col-xs-2">Discount</div>
+                        <div class="col-xs-2">Tax</div>
+                        <div class="col-xs-1">Total</div>
+                    </div>
+                    <div class="row invoice-item">
+                        <div class="col-xs-3 input-container">
+                            <div angucomplete-alt id="itemsAutocomplete" placeholder="Type item name" pause="100"
+                                 selected-object="afterSelectedItem" local-data="items" search-fields="ItemName"
+                                 title-field="ItemName" minlength="0" input-class="form-control form-control-small" match-class="highlight">
+                            </div>
+                        </div>
+                        <div class="col-xs-1 input-container">
+                            <input ng-model="itemQuantity" value="1" size="4" ng-required ng-validate="integer" placeholder="Quantity" />
+
+                        </div>
+                        <div class="col-xs-1 input-container">
+                            {{ItemPrice}}
+                            @*<input ng-model="ItemPrice" value="1" size="4" ng-required ng-validate="integer" placeholder="Price"/>*@
+
+                        </div>
+                        <div class="col-xs-2 input-container">
+                            <input ng-model="itemDiscount" value="1" size="4" ng-required ng-validate="integer" placeholder="Discount" /> %
+
+                        </div>
+                        <div class="col-xs-2 input-container">
+                            <input ng-model="itemTax" value="1" size="4" ng-required ng-validate="integer" placeholder="Tax" /> %
+
+                        </div>
+                        <div class="col-xs-1 input-container">
+                            {{itemSubTotal()}}
+                        </div>
+                        <div class="col-xs-2 input-container">
+                            <div class="col-xs-12 add-item-container" ng-hide="printMode">
+                                <a class="btn btn-primary" href ng-click="addItem()">Add [+]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="items-table">
+            <div class="row header invhd">
+                <div class="col-xs-1">&nbsp;</div>
+                <div class="col-xs-2">Item</div>
+                <div class="col-xs-2">Quantity</div>
+                <div class="col-xs-2">Price {{currencySymbol}}</div>
+                <div class="col-xs-1">Discount</div>
+                <div class="col-xs-1">Tax</div>
+                <div class="col-xs-3">Total</div>
+            </div>
+            <div class="row invoice-item" ng-repeat="item in invoiceItems" ng-animate="'slide-down'">
+                <div class="col-xs-1 remove-item-container">
+                    <a href ng-hide="printMode" ng-click="removeItem(item)" class="btn btn-danger">[X]</a>
+                </div>
+                <div class="col-xs-2 input-container">
+                    @*<div angucomplete-alt id="itemsAutocomplete" placeholder="Type item name" pause="100"
+                             selected-object="afterSelectedItem" local-data="items" search-fields="ItemName"
+                             title-field="ItemName" minlength="1" input-class="form-control form-control-small" match-class="highlight">
+                        </div>*@
+                    @* <input ng-model="item.description" placeholder="Description"/>*@
+                    {{item.itemName}}
+
+                </div>
+                <div class="col-xs-2 input-container">
+                    {{item.Quantity}}
+                    @*<input ng-model="item.Quantity" value="1" size="4" ng-required ng-validate="integer" placeholder="Quantity"/>*@
+                </div>
+                <div class="col-xs-2 input-container">
+                    {{item.ItemPrice}}
+                    @* <input ng-model="item.ItemPrice" value="0.00" ng-required ng-validate="number" size="6" placeholder="Item Price"/>*@
+                </div>
+                <div class="col-xs-1 input-container">
+                    {{item.Discount}}
+                    @*  <input ng-model="item.Discount" value="0.00" ng-required ng-validate="number" size="6" placeholder="Item Discount" />*@
+                </div>
+                <div class="col-xs-1 input-container">
+                    {{item.Tax}}
+                    @*<input ng-model="item.Tax" value="0.00" ng-required ng-validate="number" size="6" placeholder="Item Tax"/>*@
+                </div>
+                <div class="col-xs-2  input-container">
+                    {{item.ItemNet | currency: currencySymbol}}
+                </div>
+            </div>
+            @*<div class="row invoice-item">
+                    <div class="col-xs-12 add-item-container" ng-hide="printMode">
+                        <a class="btn btn-primary" href ng-click="addItem()">[+]</a>
+                    </div>
+                </div>*@
+            @*<div class="row">
+                    <div class="col-xs-10 text-right">Sub Total</div>
+                    <div class="col-xs-2 text-right">{{invoiceSubTotal() | currency: currencySymbol}}</div>
+                </div>*@
+            @*<div class="row">
+                    <div class="col-xs-10 text-right">Tax(%): <input ng-model="invoice.tax" ng-validate="number" style="width:43px"></div>
+                    <div class="col-xs-2 text-right">{{calculateTax() | currency: currencySymbol}}</div>
+                </div>*@
+            <div class="row">
+                <div class="col-xs-10 text-right pl">Grand Total:</div>
+                <div class="col-xs-2 text-right">{{calculateGrandTotal() | currency: currencySymbol}}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 text-right pl">Paid :</div>
+                <input type="text" class="col-xs-2 paid" ng-model="Paid" />
+                <div class="col-xs-4 text-right pl">Remain :</div>
+                <input type="text" class="col-xs-2 rm" ng-model="Remain" />
+            </div>
+            <div class="row">
+                <div class="col-xs-4 text-right pl">Note :</div>
+                <textarea class="col-xs-2" ng-model="Note" rows="2" cols="2" style="border: 1px solid gray; width: 100%"></textarea>
+            </div>
+        </div>
+        <div class="row noPrint actions">
+            <a href="#" class="btn btn-lg btn-success" ng-hide="printMode" ng-click="saveInvoice()">Save</a>
+        </div>
+        <div class="row noPrint actions">
+            @*<a href="#" class="btn btn-primary" ng-show="printMode" ng-click="printInfo()">Print</a>*@
+            <a href="#" class="btn btn-primary" ng-click="clear()">Reset</a>
+            @*<a href="#" class="btn btn-primary" ng-hide="printMode" ng-click="printMode = true;">Turn On Print Mode</a>
+            <a href="#" class="btn btn-primary" ng-show="printMode" ng-click="printMode = false;">Turn Off Print Mode</a>*@
+        </div>
+    </div>
+
+
+
+
+</body>
+
+@section Scripts {
+    <script src="~/Scripts/app/main.js"></script>
+    @* @Scripts.Render("~/bundles/jqueryval")*@
+}

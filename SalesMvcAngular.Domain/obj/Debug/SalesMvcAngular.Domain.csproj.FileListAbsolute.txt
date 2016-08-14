@@ -1,0 +1,12 @@
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\SalesMvcAngular.Domain.dll.config
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\SalesMvcAngular.Domain.dll
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\SalesMvcAngular.Domain.pdb
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\EntityFramework.dll
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\System.Web.Mvc.dll
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\EntityFramework.xml
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\bin\Debug\System.Web.Mvc.xml
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\obj\Debug\SalesMvcAngular.Domain.csprojResolveAssemblyReference.cache
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\obj\Debug\SalesMvcAngular.Domain.dll
+C:\Users\lol\Desktop\DeliverySystem\SalesMvcAngular\SalesMvcAngular.Domain\obj\Debug\SalesMvcAngular.Domain.pdb

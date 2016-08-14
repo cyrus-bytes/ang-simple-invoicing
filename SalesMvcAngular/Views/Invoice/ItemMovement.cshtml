@@ -1,0 +1,133 @@
+﻿@using SalesMvcAngular.Domain
+@using SalesMvcAngular.Domain.ViewModel
+@*@model IEnumerable<SalesMvcAngular.Domain.InvoiceDetail>*@
+
+@{
+    ViewBag.Title = "Item Movement";
+}
+@section css
+{
+    <link href="~/Content/chosen.min.css" rel="stylesheet"/>
+    <style type="text/css">
+      
+      
+    </style>
+}
+
+<h2 class="page-header">Item Movement</h2>
+
+
+<label for="ddlItem">Filter List</label>
+@Html.DropDownList("ddlItem", (IEnumerable<SelectListItem>)ViewBag.listItem, "-- Select Item --", new { @class = "chosen-select" })
+
+<div style="margin-top: 3%;">
+    <table id="itemsTable" class="table table-responsive table-striped ">
+        <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Item Price</th>
+            <th>Discount</th>
+            <th>Tax</th>
+            <th>Net Price</th>
+            <th>Date</th>
+            <th>Store</th>
+            <th>Customer</th>
+        </tr>
+        </thead>
+        <tbody id="tb">
+        @{
+            List<InvoiceDetailViewModel> dtList = (List<InvoiceDetailViewModel>)ViewBag.Items;
+            foreach (var t in dtList)
+        {
+            <tr>
+                <td>@t.ItemName</td>
+                <td>@t.Quantity</td>
+                <td>@t.ItemPrice</td>
+                <td>@t.Discount</td>
+                <td>@t.Tax</td>
+                <td>@t.TotalPrice</td>
+                <td>@t.InvoiceDate</td>
+                <td>@t.StoreName</td>
+                <td>@t.CustomerName</td>
+
+            </tr>
+        }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+@section scripts
+{
+       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".chosen-select").chosen({
+                width: "15%"
+            });
+             $('#itemsTable').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                     {
+                         text: 'PDF',
+                         extend: 'pdfHtml5',
+                         exportOptions: {
+                             columns: ':visible:not(.not-export-col)'
+                         }
+                     },
+                      {
+                          text: 'Excel',
+                          extend: 'excelHtml5',
+                          exportOptions: {
+                              columns: ':visible:not(.not-export-col)'
+                          }
+                      },
+                      {
+                          text: 'CSV',
+                          extend: 'csvHtml5',
+                          exportOptions: {
+                              columns: ':visible:not(.not-export-col)'
+                          }
+                      },
+                       {
+                           text: 'Copy',
+                           extend: 'copyHtml5',
+                           exportOptions: {
+                               columns: ':visible:not(.not-export-col)'
+                           }
+                       },
+                       {
+                           text: 'Print',
+                           extend: 'print',
+                           exportOptions: {
+                               columns: ':visible:not(.not-export-col)'
+                           }
+                       }
+                ],
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
+           
+            
+            $('#ddlItem').on("change", function () {
+                var selectedVal = this.value;
+                if (selectedVal !== "") {
+                    window.location.href = "/Invoice/ItemMovement?itemId=" + selectedVal;
+                  
+                }
+              
+               
+            });
+
+        });
+    </script>
+}

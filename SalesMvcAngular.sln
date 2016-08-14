@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesMvcAngular", "SalesMvcAngular\SalesMvcAngular.csproj", "{83E1375B-0817-4118-8DA3-CD7CCF7E9F11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesMvcAngular.Domain", "SalesMvcAngular.Domain\SalesMvcAngular.Domain.csproj", "{D963CC3B-EFDD-450A-8662-8B55B2DD7DF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83E1375B-0817-4118-8DA3-CD7CCF7E9F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E1375B-0817-4118-8DA3-CD7CCF7E9F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E1375B-0817-4118-8DA3-CD7CCF7E9F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E1375B-0817-4118-8DA3-CD7CCF7E9F11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D963CC3B-EFDD-450A-8662-8B55B2DD7DF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D963CC3B-EFDD-450A-8662-8B55B2DD7DF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D963CC3B-EFDD-450A-8662-8B55B2DD7DF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D963CC3B-EFDD-450A-8662-8B55B2DD7DF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
